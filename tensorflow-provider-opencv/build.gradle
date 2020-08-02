@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+}
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayRepoName = 'Easy-TensorFlow-OpenCV'
+
+    groupId = 'com.igla.tensorflow_easy'
+    libraryName = 'Easy-TensorFlow-opencv'
+    artifact = 'easy-tensorflow-opencv'
+    libraryVersion = '0.1'
+    libraryDescription = 'Java library to simplify work with TensorFlow'
+
+    siteUrl = 'https://github.com/iglaweb/Easy-TensorFlow/tree/master/easy-tensorflow-opencv'
+    gitUrl = 'https://github.com/iglaweb/Easy-TensorFlow.git'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':tensorflow')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+apply from: '../tensorflow/bintray.gradle'

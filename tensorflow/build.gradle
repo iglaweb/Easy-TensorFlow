@@ -1,0 +1,38 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayRepoName = 'Easy-TensorFlow'
+
+    groupId = 'com.igla.tensorflow_easy'
+    libraryName = 'Easy-TensorFlow'
+    artifact = 'easy-tensorflow'
+    libraryVersion = '0.1'
+    libraryDescription = 'Java library to simplify work with TensorFlow'
+
+    siteUrl = 'https://github.com/iglaweb/Easy-TensorFlow'
+    gitUrl = 'https://github.com/iglaweb/Easy-TensorFlow.git'
+}
+
+group 'com.igla.tensorflow_easy'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    api 'org.jetbrains:annotations:16.0.2'
+    api "org.jetbrains.kotlin:kotlin-stdlib:1.3.72"
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['-Xdoclint:none', '-Xlint:none', '-nowarn']
+}
+
+apply from: 'bintray.gradle'

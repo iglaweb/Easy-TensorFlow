@@ -1,0 +1,31 @@
+plugins {
+    id 'java-library'
+}
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayRepoName = 'Easy-TensorFlow-Javax'
+
+    groupId = 'com.igla.tensorflow_easy'
+    libraryName = 'Easy-TensorFlow-bufferedimage'
+    artifact = 'easy-tensorflow-javax'
+    libraryVersion = '0.1'
+    libraryDescription = 'Java library to simplify work with TensorFlow'
+
+    siteUrl = 'https://github.com/iglaweb/Easy-TensorFlow/tree/master/easy-tensorflow-bufferedimage'
+    gitUrl = 'https://github.com/iglaweb/Easy-TensorFlow.git'
+}
+
+group 'com.igla'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    api project(':tensorflow')
+}
+
+apply from: '../tensorflow/bintray.gradle'

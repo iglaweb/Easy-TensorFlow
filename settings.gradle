@@ -1,0 +1,6 @@
+rootProject.name = 'tensorflow_easy'
+include 'tensorflow-provider-opencv'
+include 'tensorflow'
+include 'tensorflow-provider-bufferedimage'
+include 'jvm-sample'
+
