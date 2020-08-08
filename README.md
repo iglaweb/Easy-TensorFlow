@@ -6,8 +6,8 @@ TensorFlow-Easy will help you to run ML models in a simplified and uniformed way
 
 It is efficient by default:
 
- * Memory management for TensorFlow models.
  * Unified way to run models.
+ * Memory management for TensorFlow models.
 
 
 Example 1: Run Faceboxes [model][faceboxes-model]
@@ -32,10 +32,10 @@ List<ObjectRecognition> objectRecognitions = objectDetector.classifyImage(image)
 ```
 
 
-Example 2: Run Yolo [model][yolo-example]
+Example 2: Run Yolo [model][yolo-model]
 ----------------
 
-This program posts data to a service. [Full source][yolo-model].
+This program posts data to a service. [Full source][yolo-example].
 
 ```java
 File labelsFile = ResourceUtils.getFile("", "models/yolo-voc-labels.txt");
