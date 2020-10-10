@@ -1,11 +1,10 @@
 package com.igla.tensorflow_easy.core;
 
 import com.igla.tensorflow_easy.obj_recognition.CustomGraphProcessor;
+import com.igla.tensorflow_easy.utils.IoUtils;
 import com.igla.tensorflow_easy.utils.TensorFlowUtils;
-import com.igla.tensorflow_easy.utils.Timber;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.tensorflow.Graph;
 import org.tensorflow.Tensor;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public abstract class DetectorBase<T, Result, PreResult> implements BaseProcessImage<T, Result> {
 
-    protected Graph graph;
+    protected InputModel inputModel;
 
     @Nullable
     protected List<String> labels;
@@ -24,24 +23,17 @@ public abstract class DetectorBase<T, Result, PreResult> implements BaseProcessI
     protected final float thresholdValue;
 
     @NotNull
-    private InputImageTensorProvider<T> inputImageTensorProvider;
+    private final InputImageTensorProvider<T> inputImageTensorProvider;
 
     protected final Config<T> config;
 
     public DetectorBase(Config<T> config) throws IOException {
-        this.graph = readGraph(config);
-        if (this.graph == null) {
-            throw new IllegalArgumentException("No graph data provided");
-        }
+        Config.GraphFile graphFile = config.getGraphFile();
+
+        this.inputModel = InputModel.createModelObj(graphFile);
 
         Config.LabelsFile labelsFile = config.getLabelsFile();
-        if (labelsFile != null) {
-            if (labelsFile.getFile() != null) {
-                this.labels = TensorFlowUtils.loadLabels(labelsFile.getFile());
-            } else if (labelsFile.getLabels() != null) {
-                this.labels = labelsFile.getLabels();
-            }
-        }
+        this.labels = readLabels(labelsFile);
 
         this.config = config;
         this.thresholdValue = config.getThresholdValue();
@@ -49,12 +41,13 @@ public abstract class DetectorBase<T, Result, PreResult> implements BaseProcessI
         this.classifier = createGraphProcessor();
     }
 
-    private Graph readGraph(Config<T> config) throws IOException {
-        Config.GraphFile graphFile = config.getGraphFile();
-        if (graphFile.getFile() != null) {
-            return TensorFlowUtils.readGraphFile(graphFile.getFile());
-        } else if (graphFile.getGraphFile() != null) {
-            return setup(graphFile.getGraphFile());
+    private List<String> readLabels(Config.LabelsFile labelsFile) throws IOException {
+        if (labelsFile != null) {
+            if (labelsFile.getFile() != null) {
+                return TensorFlowUtils.loadLabels(labelsFile.getFile());
+            } else if (labelsFile.getLabels() != null) {
+                return labelsFile.getLabels();
+            }
         }
         return null;
     }
@@ -79,23 +72,10 @@ public abstract class DetectorBase<T, Result, PreResult> implements BaseProcessI
 
     protected abstract List<Result> processDetections(PreResult detection, int width, int height);
 
-    private Graph setup(byte[] graphBytes) {
-        long start = System.currentTimeMillis();
-        Timber.i("Loading TensorFlow graph...");
-        Graph graph = TensorFlowUtils.importGraph(graphBytes);
-        long timeDiff = System.currentTimeMillis() - start;
-        System.out.println("TensorFlow graph loaded in " + timeDiff + " ms");
-        return graph;
-    }
-
     public void close() {
-        try {
-            this.classifier.close();
-            this.graph.close();
-            this.inputImageTensorProvider.close();
-        } catch (Exception e) {
-            Timber.e(e);
-        }
+        IoUtils.closeQuietly(this.classifier);
+        IoUtils.closeQuietly(this.inputModel);
+        IoUtils.closeQuietly(this.inputImageTensorProvider);
     }
 
     @Override

@@ -40,8 +40,17 @@ public final class ResourceUtils {
 
     public static void loadOpenCv() {
         LibraryLoader fileNameLibraryLoader = new FileAbsolutePathLibraryLoader();
-        File opencvNative = ResourceUtils.getFile("", "libopencv_java420.dylib");
+        File opencvNative = ResourceUtils.getFile("", "libopencv_java440.dylib");
         String opencvPath = opencvNative.getAbsolutePath();
         OpenCVLoader.initDebug(fileNameLibraryLoader, opencvPath);
+    }
+
+    /***
+     * https://github.com/TropComplique/FaceBoxes-tensorflow
+     * @return path to pb model
+     */
+    public static File getObjectDetectionModel() {
+        final String graphName = "faceboxes/faceboxes_model.pb";
+        return ResourceUtils.getFile("", graphName);
     }
 }

@@ -2,8 +2,8 @@ package com.igla.tensorflow_easy.classifier.models;
 
 public class ClassifyResult {
 
-    private int num_detections;
-    private float[] labelProbabilities;
+    private final int num_detections;
+    private final float[] labelProbabilities;
 
     public ClassifyResult(int num_detections, float[] labelProbabilities) {
         this.num_detections = num_detections;

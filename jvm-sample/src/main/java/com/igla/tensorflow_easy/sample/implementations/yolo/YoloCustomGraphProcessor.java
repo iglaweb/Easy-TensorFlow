@@ -1,17 +1,17 @@
 package com.igla.tensorflow_easy.sample.implementations.yolo;
 
+import com.igla.tensorflow_easy.core.InputModel;
 import com.igla.tensorflow_easy.models.Detection;
 import com.igla.tensorflow_easy.obj_recognition.CustomGraphProcessor;
 import org.jetbrains.annotations.NotNull;
-import org.tensorflow.Graph;
 import org.tensorflow.Tensor;
 
 import java.nio.FloatBuffer;
 
 public class YoloCustomGraphProcessor extends CustomGraphProcessor<Detection> {
 
-    YoloCustomGraphProcessor(@NotNull Graph graph, byte[] configProto) {
-        super(graph, configProto);
+    YoloCustomGraphProcessor(@NotNull InputModel graph) {
+        super(graph);
     }
 
     @Override

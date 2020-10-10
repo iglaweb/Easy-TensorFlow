@@ -1,5 +1,6 @@
 package com.igla.tensorflow_easy.sample.implementations.ssd_mobilenet;
 
+import com.igla.tensorflow_easy.core.InputModel;
 import com.igla.tensorflow_easy.models.Detection;
 import com.igla.tensorflow_easy.obj_recognition.CustomGraphProcessor;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +20,7 @@ public class SsdMobileNetCustomGraphProcessor extends CustomGraphProcessor<Detec
     private float[][][] temp_detection_boxes_float = null;
     private int tempTensorObjectSize = 0;
 
-    public SsdMobileNetCustomGraphProcessor(@NotNull Graph graph) {
+    public SsdMobileNetCustomGraphProcessor(@NotNull InputModel graph) {
         super(graph);
     }
 

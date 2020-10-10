@@ -1,10 +1,10 @@
 package com.igla.tensorflow_easy.sample.implementations.faceboxes;
 
+import com.igla.tensorflow_easy.core.InputModel;
 import com.igla.tensorflow_easy.models.Detection;
 import com.igla.tensorflow_easy.obj_recognition.CustomGraphProcessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.tensorflow.Graph;
 import org.tensorflow.Tensor;
 
 import java.util.Arrays;
@@ -17,8 +17,8 @@ public class FaceboxesCustomGraphProcessor extends CustomGraphProcessor<Detectio
     private float[][][] temp_detection_boxes_float = null;
     private int tempTensorObjectSize = 0;
 
-    FaceboxesCustomGraphProcessor(@NotNull Graph graph) {
-        super(graph);
+    FaceboxesCustomGraphProcessor(@NotNull InputModel inputModel) {
+        super(inputModel);
     }
 
     @Override

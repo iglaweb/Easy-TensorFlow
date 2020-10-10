@@ -1,6 +1,11 @@
 plugins {
     id 'java'
+    id 'de.undercouch.download'
 }
+
+// Download default models; if you wish to use your own models then
+// place them in the "assets" directory and comment out this line.
+apply from:'download_model.gradle'
 
 group 'com.igla.tensorflow_easy'
 version '1.0-SNAPSHOT'
@@ -8,7 +13,7 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 //java instructions https://www.tensorflow.org/install/lang_java
-def TENSORFLOW_LIB = 'jvm-sample/libs/libtensorflow_jni-cpu-darwin-x86_64-2.3.0'
+def TENSORFLOW_LIB = './jvm-sample/libs'
 //TF jar https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-2.3.0.jar
 
 repositories {

@@ -1,6 +1,7 @@
 package com.igla.tensorflow_easy.sample.implementations.inception;
 
 import com.igla.tensorflow_easy.classifier.models.ClassifyResult;
+import com.igla.tensorflow_easy.core.InputModel;
 import com.igla.tensorflow_easy.obj_recognition.CustomGraphProcessor;
 import org.jetbrains.annotations.NotNull;
 import org.tensorflow.Graph;
@@ -12,8 +13,8 @@ public class InceptionCustomGraphProcessor extends CustomGraphProcessor<Classify
 
     private int tempTensorObjectSize = 0;
 
-    InceptionCustomGraphProcessor(@NotNull Graph graph) {
-        super(graph);
+    InceptionCustomGraphProcessor(@NotNull InputModel inputModel) {
+        super(inputModel);
     }
 
     @Override

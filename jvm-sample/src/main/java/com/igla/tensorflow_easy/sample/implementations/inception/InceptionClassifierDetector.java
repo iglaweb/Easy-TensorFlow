@@ -14,7 +14,7 @@ import java.util.List;
 public class InceptionClassifierDetector<T> extends
         DetectorBase<T, ClassifyRecognition, ClassifyResult> {
 
-    private List<ClassifyRecognition> emptyRecognitions = Collections.emptyList();
+    private final List<ClassifyRecognition> emptyRecognitions = Collections.emptyList();
 
     public InceptionClassifierDetector(Config<T> config) throws IOException {
         super(config);
@@ -22,7 +22,7 @@ public class InceptionClassifierDetector<T> extends
 
     @Override
     public CustomGraphProcessor<ClassifyResult> createGraphProcessor() {
-        return new InceptionCustomGraphProcessor(this.graph);
+        return new InceptionCustomGraphProcessor(this.inputModel);
     }
 
     @Override

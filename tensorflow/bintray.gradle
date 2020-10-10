@@ -74,7 +74,7 @@ bintray {
         override = true
         version {
             desc = libraryDescription
-            name = '0.0.1'
+            name = '0.0.2'
             released  = new Date()
         }
     }

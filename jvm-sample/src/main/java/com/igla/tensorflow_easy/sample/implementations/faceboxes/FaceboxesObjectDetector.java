@@ -15,7 +15,7 @@ import java.util.*;
 public class FaceboxesObjectDetector<T> extends DetectorBase<T, ObjectRecognition, Detection>
         implements ObjectDetector<T> {
 
-    private List<ObjectRecognition> emptyRecognitions = Collections.emptyList();
+    private final List<ObjectRecognition> emptyRecognitions = Collections.emptyList();
 
     // Find the best detections.
     private final Queue<ObjectRecognition> priorityQueue;
@@ -29,7 +29,7 @@ public class FaceboxesObjectDetector<T> extends DetectorBase<T, ObjectRecognitio
 
     @Override
     public CustomGraphProcessor<Detection> createGraphProcessor() {
-        return new FaceboxesCustomGraphProcessor(this.graph);
+        return new FaceboxesCustomGraphProcessor(this.inputModel);
     }
 
     @Override

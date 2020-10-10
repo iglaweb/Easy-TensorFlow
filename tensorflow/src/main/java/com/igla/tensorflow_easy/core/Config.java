@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.List;
 
 public class Config<T> {
+
     private final GraphFile graphFile;
     private final LabelsFile labelsFile;
     private final float thresholdValue;
@@ -60,16 +61,31 @@ public class Config<T> {
     public static final class GraphFile extends FileBase {
         private byte[] graphFile;
 
-        private GraphFile(File file) {
+        /***
+         * Recommended to use
+         */
+        private boolean savedBundle;
+
+        private GraphFile(File file, boolean savedBundle) {
             super(file);
+            this.savedBundle = savedBundle;
         }
 
         private GraphFile(byte[] labels) {
             this.graphFile = labels;
         }
 
+
+        public static GraphFile createSavedBundle(File file) {
+            return new GraphFile(file, true);
+        }
+
+        public static GraphFile createGraphFile(File file) {
+            return new GraphFile(file, false);
+        }
+
         public static GraphFile create(File file) {
-            return new GraphFile(file);
+            return new GraphFile(file, false);
         }
 
         public static GraphFile create(byte[] file) {
@@ -78,6 +94,10 @@ public class Config<T> {
 
         public byte[] getGraphFile() {
             return graphFile;
+        }
+
+        public boolean isSavedBundle() {
+            return savedBundle;
         }
     }
 
@@ -133,9 +153,16 @@ public class Config<T> {
 
         private int maxPriorityObjects;
 
+        @Nullable
+        private byte[] configProto;
+
         public ConfigBuilder(@NotNull GraphFile graphFile) {
             this.graphFile = graphFile;
+        }
 
+        public ConfigBuilder(@NotNull GraphFile graphFile, byte[] configProto) {
+            this.graphFile = graphFile;
+            this.configProto = configProto;
         }
 
         public ConfigBuilder<T> setMaxPriorityObjects(int maxPriorityObjects) {

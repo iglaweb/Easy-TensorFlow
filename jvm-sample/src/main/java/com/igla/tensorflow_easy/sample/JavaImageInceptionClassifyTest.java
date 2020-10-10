@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 
 import static com.igla.tensorflow_easy.sample.utils.ResourceUtils.timing;
 
@@ -51,10 +52,9 @@ public class JavaImageInceptionClassifyTest {
         timing(() -> {
             List<ClassifyRecognition> objectRecognitions = inceptionClassifierDetector.classifyImage(imageBytes);
             ClassifyRecognition classifyRecognition = objectRecognitions.get(0);
-            System.out.println(
-                    String.format("BEST MATCH: %s (%.2f%% likely)",
-                            classifyRecognition.getLabel(),
-                            classifyRecognition.getConfidence() * 100f));
+            System.out.printf(Locale.US, "BEST MATCH: %s (%.2f%% likely)%n",
+                    classifyRecognition.getLabel(),
+                    classifyRecognition.getConfidence() * 100f);
         });
 
         File imageFile01_ = ResourceUtils.getFile("", "img/image_test_400_300.jpg");
@@ -63,10 +63,9 @@ public class JavaImageInceptionClassifyTest {
         timing(() -> {
             List<ClassifyRecognition> objectRecognitions_ = inceptionClassifierDetector.classifyImage(imageBytes_);
             ClassifyRecognition classifyRecognition_ = objectRecognitions_.get(0);
-            System.out.println(
-                    String.format("BEST MATCH: %s (%.2f%% likely)",
-                            classifyRecognition_.getLabel(),
-                            classifyRecognition_.getConfidence() * 100f));
+            System.out.printf(Locale.US, "BEST MATCH: %s (%.2f%% likely)%n",
+                    classifyRecognition_.getLabel(),
+                    classifyRecognition_.getConfidence() * 100f);
         });
         inceptionClassifierDetector.close();
     }

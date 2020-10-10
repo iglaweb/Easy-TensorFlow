@@ -19,7 +19,7 @@ public final class TensorFlowUtils {
      * Pre-process input. It resize the image and normalize its pixels
      *
      * @param image Input image
-     * @return Tensor<Float> with shape [1][416][416][3]
+     * @return Tensor&lt;Float&gt; with shape [1][416][416][3]
      */
     public static Tensor<Float> executeImageOnGraph(byte[] image, String inputOp, Graph graph, Output graphOutput) {
         try (Session s = new Session(graph)) {
@@ -37,7 +37,7 @@ public final class TensorFlowUtils {
         }
     }
 
-    public static Graph importGraph(byte[] graphBytes) {
+    public static Graph importGraph(byte[] graphBytes) throws IllegalArgumentException {
         Graph graph = new Graph();
         graph.importGraphDef(graphBytes);
         return graph;

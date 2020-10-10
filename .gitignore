@@ -84,8 +84,6 @@ gen/
 out/
 obj/
 
-*.apk
-
 # Local configuration file (sdk path, etc)
 local.properties
 
@@ -129,3 +127,7 @@ out
 *.so
 *.dylib
 *.dat
+
+libs/
+
+*.pb

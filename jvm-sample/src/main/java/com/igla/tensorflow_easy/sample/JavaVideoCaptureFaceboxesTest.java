@@ -58,7 +58,7 @@ public class JavaVideoCaptureFaceboxesTest {
         Timber.plant(new JavaConsoleReportingTree());
         ResourceUtils.loadOpenCv();
 
-        File faceboxesFile = getObjectDetectionModel();
+        File faceboxesFile = ResourceUtils.getObjectDetectionModel();
         InputImageTensorOpencvProvider tensorOpencvProvider = new InputImageTensorOpencvProvider();
 
         Config<Mat> configBuilder = new Config.ConfigBuilder<Mat>(Config.GraphFile.create(faceboxesFile))
@@ -73,10 +73,5 @@ public class JavaVideoCaptureFaceboxesTest {
         } catch (Exception e) {
             Timber.e(e);
         }
-    }
-
-    private static File getObjectDetectionModel() {
-        final String graphName = "models/faceboxes_model.pb";
-        return ResourceUtils.getFile("", graphName);
     }
 }

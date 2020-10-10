@@ -1,0 +1,73 @@
+def tensorflowDownloadUrl = 'https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow_jni-cpu-darwin-x86_64-2.3.0.tar.gz'
+def faceboxesDownloadUrl = 'https://drive.google.com/uc?export=download&id=18XrleLvdSujoNTgxHsJFtNPHOirnWlbV'
+
+project.ext.tensorFlowTempLocalFolder = "tensorflow.tar.gz"
+project.ext.faceboxesTempLocalFile = "faceboxes_model.pb"
+
+project.ext.faceboxes = 'faceboxes'
+project.ext.tensorflow = 'tensorflow'
+
+project.ext.ASSET_DIR_TF = projectDir.toString() + '/libs/' //for tf dylib
+project.ext.ASSET_DIR = projectDir.toString() + '/src/main/resources/'
+project.ext.TMP_DIR = project.buildDir.toString() + '/downloads'
+
+def targetFaceboxesFolder = project.ext.ASSET_DIR + project.ext.faceboxes
+def targetTensorFlowFolder = project.ext.ASSET_DIR_TF
+
+////////// TensorFlow
+
+task downloadTensorFlow(type: Download) {
+    doFirst {
+        println "Build dir ${buildDir}"
+        println "Downloading ${tensorflowDownloadUrl}"
+    }
+    src tensorflowDownloadUrl
+    dest new File(buildDir, project.ext.tensorFlowTempLocalFolder)
+    overwrite false
+}
+
+task downloadAndCopyTensorFlow(dependsOn: downloadTensorFlow, type: Copy) {
+    doFirst {
+        println "Copying ${downloadTensorFlow.dest}"
+    }
+    from tarTree(downloadTensorFlow.dest)
+    into targetTensorFlowFolder
+    doLast {
+        println "Copied to ${targetTensorFlowFolder}"
+    }
+}
+
+
+////////// Faceboxes
+
+task downloadFaceboxes(type: Download) {
+    doFirst {
+        println "Downloading ${faceboxesDownloadUrl}"
+    }
+    src faceboxesDownloadUrl
+    dest new File(buildDir, project.ext.faceboxesTempLocalFile)
+    overwrite false
+}
+
+task downloadAndCopyFaceboxes(dependsOn: downloadFaceboxes, type: Copy) {
+    doFirst {
+        println "Copying ${downloadFaceboxes.dest}"
+    }
+    from downloadFaceboxes.dest
+    into targetFaceboxesFolder
+    doLast {
+        println "Copied to ${targetFaceboxesFolder}"
+    }
+}
+
+
+task extractModels(type: Copy) {
+    dependsOn downloadAndCopyFaceboxes
+    dependsOn downloadAndCopyTensorFlow
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'assemble') {
+        task.dependsOn 'extractModels'
+    }
+}

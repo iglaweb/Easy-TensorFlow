@@ -43,6 +43,15 @@ public class IoUtils {
         }
     }
 
+    public static void closeQuietly(@Nullable final AutoCloseable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
     /**
      * Loads the graph from the pre-trained model file.
      *

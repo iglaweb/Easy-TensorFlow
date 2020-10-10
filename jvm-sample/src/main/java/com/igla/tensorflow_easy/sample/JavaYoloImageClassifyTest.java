@@ -38,7 +38,7 @@ public class JavaYoloImageClassifyTest {
 
         InputImageTensorProvider<byte[]> inputImageTensorProvider = new Yolov2ImageTensorProvider();
         Config<byte[]> configBuilder = new Config.ConfigBuilder<byte[]>(
-                Config.GraphFile.create(graphFile))
+                Config.GraphFile.create(graphFile), fullTraceRunOptions())
                 .setLabels(Config.LabelsFile.create(labels))
                 .setConfidence(0.4f)
                 .setMaxPriorityObjects(1)
@@ -59,6 +59,24 @@ public class JavaYoloImageClassifyTest {
         });
     }
 
+    /***
+     * https://github.com/tensorflow/tensorflow/blob/9752b117ff63f204c4975cad52b5aab5c1f5e9a9/tensorflow/java/src/test/java/org/tensorflow/SessionTest.java
+     * @return config options
+     */
+    private static byte[] fullTraceRunOptions() {
+        // Ideally this would use the generated Java sources for protocol buffers
+        // and end up with something like the snippet below. However, generating
+        // the Java files for the .proto files in tensorflow/core:protos_all is
+        // a bit cumbersome in bazel until the proto_library rule is setup.
+        //
+        // See https://github.com/bazelbuild/bazel/issues/52#issuecomment-194341866
+        // https://github.com/bazelbuild/rules_go/pull/121#issuecomment-251515362
+        // https://github.com/bazelbuild/rules_go/pull/121#issuecomment-251692558
+        //
+        // For this test, for now, the use of specific bytes suffices.
+        return new byte[]{0x08, 0x03};
+    }
+
     /**
      * Prints out the recognize objects and its confidence
      *
@@ -66,7 +84,9 @@ public class JavaYoloImageClassifyTest {
      */
     private static void printToConsole(final List<Recognition> recognitions) {
         for (Recognition recognition : recognitions) {
-            Timber.i("Object: %s - confidence: %.2f%%", recognition.getTitle(), recognition.getConfidence());
+            Timber.i("Object: %s - confidence: %.2f%%",
+                    recognition.getTitle(),
+                    recognition.getConfidence());
         }
     }
 }

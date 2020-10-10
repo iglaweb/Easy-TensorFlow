@@ -2,11 +2,11 @@ package com.igla.tensorflow_easy.sample.implementations.ssd_mobilenet;
 
 import com.igla.tensorflow_easy.core.Config;
 import com.igla.tensorflow_easy.core.DetectorBase;
-import com.igla.tensorflow_easy.obj_recognition.ObjectDetector;
 import com.igla.tensorflow_easy.models.Detection;
 import com.igla.tensorflow_easy.models.ObjectRecognition;
 import com.igla.tensorflow_easy.models.RectFloats;
 import com.igla.tensorflow_easy.obj_recognition.CustomGraphProcessor;
+import com.igla.tensorflow_easy.obj_recognition.ObjectDetector;
 import com.igla.tensorflow_easy.obj_recognition.RecognitionComparator;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class SsdMobileNetObjectDetector<T> extends DetectorBase<T, ObjectRecogni
 
     @Override
     public CustomGraphProcessor<Detection> createGraphProcessor() {
-        return new SsdMobileNetCustomGraphProcessor(this.graph);
+        return new SsdMobileNetCustomGraphProcessor(this.inputModel);
     }
 
     @Override

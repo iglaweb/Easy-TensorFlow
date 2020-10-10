@@ -24,7 +24,7 @@ public class JavaFaceboxesImageTest {
         File imageFile01 = ResourceUtils.getFile("", "img/image_test_400_300.jpg");
         BufferedImage image = ImageIO.read(imageFile01);
 
-        File modelFile = getObjectDetectionModel();
+        File modelFile = ResourceUtils.getObjectDetectionModel();
         InputImageTensorProvider<BufferedImage> tensorBufferedImageProvider = new InputImageTensorBufferedImageProvider();
 
         Config<BufferedImage> configBuilder = new Config.ConfigBuilder<BufferedImage>(Config.GraphFile.create(modelFile))
@@ -47,13 +47,5 @@ public class JavaFaceboxesImageTest {
         for (ObjectRecognition recognition : objectRecognitions) {
             Timber.i(recognition.toString());
         }
-    }
-
-    /***
-     * https://github.com/TropComplique/FaceBoxes-tensorflow
-     * @return path to pb model
-     */
-    private static File getObjectDetectionModel() {
-        return ResourceUtils.getFile("", "models/faceboxes_model.pb");
     }
 }

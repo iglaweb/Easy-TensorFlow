@@ -1,8 +1,9 @@
 package com.igla.tensorflow_easy.obj_recognition;
 
+import com.igla.tensorflow_easy.core.InputModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.tensorflow.Graph;
+import org.tensorflow.SavedModelBundle;
 import org.tensorflow.Session;
 import org.tensorflow.Tensor;
 
@@ -20,14 +21,13 @@ public abstract class CustomGraphProcessor<T> implements AutoCloseable {
     private List<Tensor<?>> inputTensors = new ArrayList<>(1);
     private List<String> operationNames = new ArrayList<>(resultOperationNames().length);
 
-    public CustomGraphProcessor(@NotNull Graph graph) {
-        this.session = new Session(graph);
+    public CustomGraphProcessor(@NotNull InputModel graph) {
+        this.session = graph.requestSession();
         this.operationNames.addAll(Arrays.asList(this.resultOperationNames()));
     }
 
-    public CustomGraphProcessor(@NotNull Graph graph, byte[] configProto) {
-        this.session = new Session(graph, configProto);
-        this.operationNames.addAll(Arrays.asList(this.resultOperationNames()));
+    public CustomGraphProcessor(@NotNull SavedModelBundle savedModelBundle) {
+        this.session = savedModelBundle.session();
     }
 
     public void feed(String operationName, Tensor<?> tensor) {

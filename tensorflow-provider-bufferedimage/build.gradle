@@ -9,7 +9,7 @@ ext {
     groupId = 'com.igla.tensorflow_easy'
     libraryName = 'Easy-TensorFlow-bufferedimage'
     artifact = 'easy-tensorflow-javax'
-    libraryVersion = '0.1'
+    libraryVersion = '0.2'
     libraryDescription = 'Java library to simplify work with TensorFlow'
 
     siteUrl = 'https://github.com/iglaweb/Easy-TensorFlow/tree/master/easy-tensorflow-bufferedimage'
