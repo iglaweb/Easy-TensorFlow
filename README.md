@@ -91,7 +91,7 @@ repositories {
 	    url  "https://dl.bintray.com/iglaweb/maven"
 	}
 }
-implementation 'com.igla.tensorflow_easy:tensorflow:0.1'
+implementation 'com.igla.tensorflow_easy:tensorflow:0.2'
 ```
 
 
